@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# playwright
+/playwright-report/
+/test-results/
+
+# local / planejamento
+ecc-inspect/
+**/ecc-inspect/
+UsershumbeAppDataLocalTempecc-inspect/
+UsershumbeAppDataLocalTempecc-inspect
+PLANEJAMENTO_SITE.md
+**/PLANEJAMENTO_SITE.md
