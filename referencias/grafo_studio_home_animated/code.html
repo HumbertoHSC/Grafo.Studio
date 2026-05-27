@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Grafo Studio | Sua empresa não precisa apenas aparecer.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&amp;family=Work+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .g-watermark {
+            opacity: 0.05;
+            pointer-events: none;
+            z-index: 0;
+            animation: float 20s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-55%) translateX(-20px); }
+        }
+        .reveal-text {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            animation: reveal 1.2s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+        @keyframes reveal {
+            0% { transform: translateY(110%); }
+            100% { transform: translateY(0); }
+        }
+        .section-marker {
+            width: 40px;
+            height: 2px;
+            background-color: #ffb59e;
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .card-glow:hover {
+            box-shadow: 0 10px 40px -10px rgba(255, 181, 158, 0.3);
+            transform: translateY(-5px);
+        }
+        .method-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #ffb59e, transparent);
+            z-index: 0;
+        }
+        
+        /* Scroll Reveal Classes */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .reveal-on-scroll.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Staggered items initialization */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .stagger-container.active .stagger-item {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#313030",
+                        "primary": "#ffb59e",
+                        "surface-container-low": "#1a1c1c",
+                        "surface": "#121414",
+                        "on-secondary-fixed-variant": "#474746",
+                        "surface-container": "#1e2020",
+                        "inverse-primary": "#ad3200",
+                        "secondary": "#c8c6c5",
+                        "surface-container-lowest": "#0c0f0f",
+                        "secondary-fixed-dim": "#c8c6c5",
+                        "on-primary-container": "#521300",
+                        "on-surface": "#e2e2e2",
+                        "tertiary": "#c8c6c5",
+                        "inverse-surface": "#e2e2e2",
+                        "outline": "#ac897e",
+                        "surface-variant": "#333535",
+                        "on-background": "#e2e2e2",
+                        "surface-dim": "#121414",
+                        "background": "#121414",
+                        "tertiary-fixed-dim": "#c8c6c5",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "inverse-on-surface": "#2f3131",
+                        "primary-fixed": "#ffdbd0",
+                        "on-tertiary-fixed": "#1c1b1b",
+                        "on-error": "#690005",
+                        "primary-fixed-dim": "#ffb59e",
+                        "on-primary-fixed-variant": "#852400",
+                        "surface-container-high": "#282a2b",
+                        "on-tertiary-fixed-variant": "#474646",
+                        "surface-bright": "#37393a",
+                        "surface-container-highest": "#333535",
+                        "on-surface-variant": "#e6beb2",
+                        "on-primary": "#5e1700",
+                        "surface-tint": "#ffb59e",
+                        "primary-container": "#ff5719",
+                        "on-primary-fixed": "#3a0b00",
+                        "on-secondary-container": "#b7b4b4",
+                        "secondary-fixed": "#e5e2e1",
+                        "outline-variant": "#5c4037",
+                        "on-tertiary-container": "#2a2a29",
+                        "on-secondary-fixed": "#1c1b1b",
+                        "error-container": "#93000a",
+                        "tertiary-fixed": "#e5e2e1",
+                        "secondary-container": "#474746",
+                        "on-secondary": "#313030",
+                        "tertiary-container": "#929090"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "80px",
+                        "grid-columns": "12",
+                        "section-padding": "120px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Work Sans"],
+                        "headline-md": ["Syne"],
+                        "body-md": ["Work Sans"],
+                        "headline-lg-mobile": ["Syne"],
+                        "display-xl": ["Syne"],
+                        "headline-lg": ["Syne"],
+                        "label-caps": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "display-xl": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                        "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/20">
+<div class="flex justify-between items-center px-4 md:px-margin-desktop py-6 w-full max-w-full mx-auto">
+<a class="font-headline-md text-headline-md font-bold text-on-surface" href="#">
+<img alt="Grafo Logo" class="h-8 md:h-10 w-auto" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOu0Rt6EJVa_pXuULg3ST0D-4CUWtJLc3pSnpDhqZij-62IKWuQkpB_odalUK6xkerFZbRjsr1p_IxwG9ocH-R3HlO6JTsU6GZTAPNLjXO-nD33F-8zZv0pMg9xJ6WO9C6EDXO3qWUi9T2Vw39keWwd_KWKhaVm4DSOawP2dsPhbkZx_Pzw6a1JCvAl9XW3bWN_Xsc4OnQJegN3fjYhyDcUXDk1OBpiZwxUDscf0-ccIe2NqwgdnKNNckGEqZSeZchJZjowii4S6k"/>
+</a>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-body-md text-body-md uppercase tracking-wider text-primary font-bold border-b-2 border-primary pb-1" href="#home">Home</a>
+<a class="font-body-md text-body-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#sobre">Sobre</a>
+<a class="font-body-md text-body-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#servicos">Serviços</a>
+<a class="font-body-md text-body-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#portfolio">Portfólio</a>
+<a class="font-body-md text-body-md uppercase tracking-wider text-on-surface-variant hover:text-primary transition-colors duration-300" href="#contato">Contato</a>
+</div>
+<a class="hidden lg:block bg-primary-container text-on-primary-fixed font-label-caps py-3 px-8 rounded hover:scale-105 active:scale-95 transition-all" href="#">
+            Solicitar Orçamento
+        </a>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- 1. Hero Section -->
+<header class="relative min-height-[90vh] md:h-screen flex items-center bg-[#191919] pt-24 overflow-hidden" id="home">
+<img alt="Grafo Icon Background" class="absolute right-[-10%] top-1/2 -translate-y-1/2 h-[120%] g-watermark object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyyKdy__soSmWwMz-MqgnEhAPGYEQi3555NV8Z2BBpocR_jg1IESNxwRzCqDY6Taq4vegCGNVw0c_nHbqOIQnYHtkCz3DMYBGIwNzXgaKBXNLrj7Sv0AShEMXVU03pRsmpB8hh5fAWQhYXRB-NzFowLbaNC1ohEYX5MDHDZRfCowYCl9fRIaiL1AAes7tRURIexFp54weGbS1_GtfM3JLir0stW6XWbkherchir_rj2zZ6Se1sHQagalcpu9NA14XdvWJiEsSvc_g"/>
+<div class="relative z-10 px-4 md:px-margin-desktop max-w-7xl mx-auto w-full">
+<div class="overflow-hidden mb-4">
+<h1 class="font-display-xl text-4xl md:text-display-xl uppercase reveal-text">
+                Sua empresa não precisa <br class="hidden md:block"/> apenas aparecer.
+            </h1>
+</div>
+<div class="overflow-hidden mb-12">
+<p class="font-headline-lg text-primary text-2xl md:text-headline-lg italic reveal-text" style="animation-delay: 0.3s;">
+                Precisa ser lembrada.
+            </p>
+</div>
+<div class="flex flex-col md:flex-row gap-6 reveal-on-scroll" style="transition-delay: 0.6s;">
+<a class="bg-primary-container text-on-primary-fixed font-label-caps text-center py-4 px-10 rounded-lg flex items-center justify-center gap-2 hover:bg-primary transition-all group" href="#">
+                SOLICITAR ORÇAMENTO
+                <span class="material-symbols-outlined transition-transform group-hover:translate-x-1">arrow_forward</span>
+</a>
+<a class="border border-outline text-on-surface font-label-caps text-center py-4 px-10 rounded-lg hover:bg-surface-variant transition-all" href="#">
+                VER PORTFÓLIO
+            </a>
+</div>
+</div>
+</header>
+<!-- 2. Numbers/Social Proof -->
+<section class="bg-primary-container py-20 text-on-primary-fixed reveal-on-scroll">
+<div class="px-4 md:px-margin-desktop grid grid-cols-1 md:grid-cols-3 gap-gutter text-center">
+<div class="flex flex-col items-center">
+<span class="font-display-xl text-5xl md:text-6xl mb-2" data-target="3" id="counter1">0</span>
+<p class="font-label-caps text-lg uppercase font-bold">Pilares de Atuação</p>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-display-xl text-5xl md:text-6xl mb-2" data-target="5" id="counter2">0</span>
+<p class="font-label-caps text-lg uppercase font-bold">Etapas do Método</p>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-display-xl text-5xl md:text-6xl mb-2">100%</span>
+<p class="font-label-caps text-lg uppercase font-bold">Estratégia Personalizada</p>
+</div>
+</div>
+</section>
+<!-- 3. Quem é a Grafo -->
+<section class="py-section-padding px-4 md:px-margin-desktop relative overflow-hidden" id="sobre">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter items-center">
+<div class="md:col-span-7 reveal-on-scroll">
+<span class="section-marker"></span>
+<h2 class="font-headline-lg text-3xl md:text-headline-lg uppercase mb-8">| Quem é a Grafo?</h2>
+<p class="font-body-lg text-on-surface-variant mb-8 max-w-2xl">
+                Somos um estúdio de estratégia criativa focado em resultados tangíveis. Não acreditamos em métricas de vaidade; acreditamos em crescimento sustentável e posicionamento de marca que perdura.
+            </p>
+<blockquote class="border-l-4 border-primary pl-6 py-4 bg-surface-container/50 transform transition-transform hover:scale-[1.01]">
+<p class="font-headline-md text-2xl md:text-headline-md italic leading-tight">
+                    "Não vendemos tarefas. Entregamos crescimento e previsibilidade para o seu negócio."
+                </p>
+</blockquote>
+</div>
+<div class="md:col-span-5 flex justify-center reveal-on-scroll" style="transition-delay: 0.3s;">
+<img alt="Grafo Orange Icon" class="w-full max-w-md animate-pulse duration-[3000ms]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxKdydwxrQ1861mZ_FytsgtPGEMmsNi1KNEXIu3lrCVhfoZSb-Usfliugn9InUj5kYRb0woNwSd-DdA_O0dhsHZSVSCGkfYGeMh2QtRiwQxQj7ub0gLmedSWRWhCTeM1D5ToRllvOm2-1pnCYYfy5WWSg08dKP5j-HlQn9nYzyV-sciNN79x830jLbYPGXfYGYtmuHzEEN5rQvt2lRP54GZi3BCMxOULJMSQsSblFeJt0N5JHwiLFpqJEcCTXLV7QP-qUwp2bxF2Q"/>
+</div>
+</div>
+</section>
+<!-- 4. O Que Fazemos -->
+<section class="py-section-padding bg-surface-container-lowest relative overflow-hidden" id="servicos">
+<div class="px-4 md:px-margin-desktop">
+<div class="reveal-on-scroll">
+<span class="section-marker"></span>
+<h2 class="font-headline-lg text-3xl md:text-headline-lg uppercase mb-16">| O que fazemos</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-6 gap-gutter stagger-container">
+<!-- Large Card -->
+<div class="md:col-span-4 bg-surface-container p-10 border-b-2 border-primary card-glow transition-all group relative overflow-hidden min-h-[400px] stagger-item">
+<span class="material-symbols-outlined text-primary text-6xl mb-6">workspace_premium</span>
+<h3 class="font-headline-lg text-4xl mb-4">Branding</h3>
+<p class="font-body-lg text-on-surface-variant mb-8 max-w-lg">Criação e reposicionamento de marcas que conectam com o público certo e transmitem autoridade imediata.</p>
+<a class="inline-flex items-center gap-2 text-primary font-bold uppercase tracking-widest hover:gap-4 transition-all" href="#">
+                    SAIBA MAIS <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+<img alt="Grafo BG" class="absolute -right-10 -bottom-10 h-64 opacity-[0.03] group-hover:opacity-10 transition-opacity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfd6uqxI21WZugk3ym5qYPmCV6Yaa_ibnYlnNwJ5nN8gmGt3k2_zI_nnRCsx7CaNpIR24YjBUXOV5rJGmu3PPPdoNVUb-DPf4kdvPJ4NG1M9TwrP9VxYe1CXSbfOWOYY6Hk8Zhpwdavrvf-Aw09XnoOXTJwhLIzDPiKdvNDV4c8XvYdCPlEpGoQJnHs1IDJozhATjjcQIZ5p4pOpg6NwuSAjeY-O3trnLWjiSX1lKFiv7WJ0DXHQMXanNN16iouJM4BGZT6ByYGsw"/>
+</div>
+<!-- Small Cards -->
+<div class="md:col-span-2 bg-surface-container p-8 border-b-2 border-primary card-glow transition-all group stagger-item">
+<span class="material-symbols-outlined text-primary text-4xl mb-6">ads_click</span>
+<h3 class="font-headline-md text-2xl mb-4">Tráfego Pago</h3>
+<p class="font-body-md text-on-surface-variant mb-6">Gestão estratégica de anúncios em Google e Meta para atrair clientes prontos para comprar.</p>
+<a class="inline-flex items-center gap-2 text-primary font-bold text-sm uppercase transition-all" href="#">
+                    SAIBA MAIS <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="md:col-span-2 bg-surface-container p-8 border-b-2 border-primary card-glow transition-all group stagger-item">
+<span class="material-symbols-outlined text-primary text-4xl mb-6">brush</span>
+<h3 class="font-headline-md text-2xl mb-4">Social Media &amp; Design</h3>
+<p class="font-body-md text-on-surface-variant mb-6">Conteúdo que engaja e design que valoriza sua presença digital todos os dias.</p>
+<a class="inline-flex items-center gap-2 text-primary font-bold text-sm uppercase transition-all" href="#">
+                    SAIBA MAIS <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="md:col-span-2 bg-surface-container p-8 border-b-2 border-primary card-glow transition-all group stagger-item">
+<span class="material-symbols-outlined text-primary text-4xl mb-6">code</span>
+<h3 class="font-headline-md text-2xl mb-4">Desenvolvimento Web</h3>
+<p class="font-body-md text-on-surface-variant mb-6">Sites e landing pages de alta conversão, rápidos e otimizados para todos os dispositivos.</p>
+<a class="inline-flex items-center gap-2 text-primary font-bold text-sm uppercase transition-all" href="#">
+                    SAIBA MAIS <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="md:col-span-2 bg-surface-container p-8 border-b-2 border-primary card-glow transition-all group stagger-item">
+<span class="material-symbols-outlined text-primary text-4xl mb-6">query_stats</span>
+<h3 class="font-headline-md text-2xl mb-4">Tecnologia &amp; Dados</h3>
+<p class="font-body-md text-on-surface-variant mb-6">Implementação de CRM e análise de dados para decisões baseadas em números reais.</p>
+<a class="inline-flex items-center gap-2 text-primary font-bold text-sm uppercase transition-all" href="#">
+                    SAIBA MAIS <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Método GRAFO 360° -->
+<section class="py-section-padding px-4 md:px-margin-desktop bg-surface overflow-hidden">
+<div class="reveal-on-scroll">
+<span class="section-marker"></span>
+<h2 class="font-headline-lg text-3xl md:text-headline-lg uppercase mb-16">| Método GRAFO 360°</h2>
+</div>
+<div class="relative">
+<div class="hidden md:block method-line"></div>
+<div class="grid grid-cols-1 md:grid-cols-5 gap-8 relative z-10 stagger-container">
+<!-- G -->
+<div class="bg-primary-container p-8 text-on-primary-fixed rounded-lg flex flex-col items-center text-center transform transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 stagger-item">
+<span class="font-display-xl text-6xl mb-4">G</span>
+<h4 class="font-headline-md text-xl mb-2">Ganhar Atenção</h4>
+<p class="text-sm opacity-90">Interromper o scroll e destacar sua marca no mercado.</p>
+</div>
+<!-- R -->
+<div class="bg-primary-container p-8 text-on-primary-fixed rounded-lg flex flex-col items-center text-center transform transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 stagger-item">
+<span class="font-display-xl text-6xl mb-4">R</span>
+<h4 class="font-headline-md text-xl mb-2">Relacionar</h4>
+<p class="text-sm opacity-90">Construir confiança através de conteúdo estratégico.</p>
+</div>
+<!-- A -->
+<div class="bg-primary-container p-8 text-on-primary-fixed rounded-lg flex flex-col items-center text-center transform transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 stagger-item">
+<span class="font-display-xl text-6xl mb-4">A</span>
+<h4 class="font-headline-md text-xl mb-2">Atrair</h4>
+<p class="text-sm opacity-90">Levar o público qualificado para o canal de vendas.</p>
+</div>
+<!-- F -->
+<div class="bg-primary-container p-8 text-on-primary-fixed rounded-lg flex flex-col items-center text-center transform transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 stagger-item">
+<span class="font-display-xl text-6xl mb-4">F</span>
+<h4 class="font-headline-md text-xl mb-2">Fidelizar</h4>
+<p class="text-sm opacity-90">Encantar o cliente para novas compras e indicações.</p>
+</div>
+<!-- O -->
+<div class="bg-primary-container p-8 text-on-primary-fixed rounded-lg flex flex-col items-center text-center transform transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 stagger-item">
+<span class="font-display-xl text-6xl mb-4">O</span>
+<h4 class="font-headline-md text-xl mb-2">Otimizar</h4>
+<p class="text-sm opacity-90">Analisar dados para escalar o que traz resultado.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Para Quem Trabalhamos -->
+<section class="py-20 bg-surface-container-low reveal-on-scroll">
+<div class="px-4 md:px-margin-desktop text-center">
+<p class="font-label-caps mb-12 uppercase tracking-widest text-primary">Nossos principais segmentos</p>
+<div class="flex flex-wrap justify-center gap-4 md:gap-8">
+<div class="px-8 py-4 border border-outline-variant rounded-full hover:bg-primary-container hover:text-on-primary-fixed hover:border-primary transition-all cursor-default">Restaurantes</div>
+<div class="px-8 py-4 border border-outline-variant rounded-full hover:bg-primary-container hover:text-on-primary-fixed hover:border-primary transition-all cursor-default">Clínicas</div>
+<div class="px-8 py-4 border border-outline-variant rounded-full hover:bg-primary-container hover:text-on-primary-fixed hover:border-primary transition-all cursor-default">E-commerce</div>
+<div class="px-8 py-4 border border-outline-variant rounded-full hover:bg-primary-container hover:text-on-primary-fixed hover:border-primary transition-all cursor-default">Serviços B2B</div>
+<div class="px-8 py-4 border border-outline-variant rounded-full hover:bg-primary-container hover:text-on-primary-fixed hover:border-primary transition-all cursor-default">Educação</div>
+<div class="px-8 py-4 border border-outline-variant rounded-full hover:bg-primary-container hover:text-on-primary-fixed hover:border-primary transition-all cursor-default">Real Estate</div>
+</div>
+</div>
+</section>
+<!-- 7. Pacotes -->
+<section class="py-section-padding px-4 md:px-margin-desktop">
+<div class="text-center mb-16 reveal-on-scroll">
+<span class="section-marker mx-auto"></span>
+<h2 class="font-headline-lg text-3xl md:text-headline-lg uppercase">Planos Estratégicos</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter items-start stagger-container">
+<!-- Plan 1 -->
+<div class="bg-surface-container p-8 rounded-lg border-b-2 border-outline-variant hover:border-primary hover:-translate-y-2 transition-all flex flex-col h-full stagger-item">
+<h3 class="font-headline-md text-2xl mb-2">Presença Local</h3>
+<p class="text-primary font-display-xl text-3xl mb-8">R$ 1.990<span class="text-sm font-body-md text-on-surface-variant">/mês</span></p>
+<ul class="space-y-4 mb-10 flex-grow">
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Gestão de Google Meu Negócio</li>
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> 8 Posts / mês no Instagram</li>
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Tráfego para WhatsApp</li>
+</ul>
+<a class="w-full py-4 border border-primary text-primary font-bold text-center hover:bg-primary hover:text-on-primary-fixed transition-all" href="https://wa.me/5500000000000">QUERO ESSE PLANO →</a>
+</div>
+<!-- Plan 2 (Main) -->
+<div class="bg-surface-container-high p-8 rounded-lg border-2 border-primary transform md:scale-110 shadow-2xl relative z-10 flex flex-col h-full stagger-item">
+<span class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary-fixed px-4 py-1 font-label-caps rounded-full text-[10px] font-bold">⭐ MAIS INDICADO</span>
+<h3 class="font-headline-md text-2xl mb-2">Crescimento Regional</h3>
+<p class="text-primary font-display-xl text-4xl mb-8">R$ 2.790<span class="text-sm font-body-md text-on-surface-variant">/mês</span></p>
+<ul class="space-y-4 mb-10 flex-grow">
+<li class="flex gap-2 items-center"><span class="material-symbols-outlined text-primary">check_circle</span> Social Media Completo (12 posts)</li>
+<li class="flex gap-2 items-center"><span class="material-symbols-outlined text-primary">check_circle</span> Gestão Google Ads &amp; Meta Ads</li>
+<li class="flex gap-2 items-center"><span class="material-symbols-outlined text-primary">check_circle</span> Landing Page Inclusa</li>
+<li class="flex gap-2 items-center"><span class="material-symbols-outlined text-primary">check_circle</span> Relatório de Performance</li>
+</ul>
+<a class="w-full py-4 bg-primary text-on-primary-fixed font-bold text-center hover:bg-primary-fixed transition-all" href="https://wa.me/5500000000000">QUERO ESSE PLANO →</a>
+</div>
+<!-- Plan 3 -->
+<div class="bg-surface-container p-8 rounded-lg border-b-2 border-outline-variant hover:border-primary hover:-translate-y-2 transition-all flex flex-col h-full stagger-item">
+<h3 class="font-headline-md text-2xl mb-2">Domínio Digital</h3>
+<p class="text-primary font-display-xl text-3xl mb-8">R$ 3.990<span class="text-sm font-body-md text-on-surface-variant">/mês</span></p>
+<ul class="space-y-4 mb-10 flex-grow">
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Estratégia de Marca (Branding)</li>
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Funil de Vendas Automatizado</li>
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> CRM &amp; BI Analytics</li>
+<li class="flex gap-2 items-center text-sm"><span class="material-symbols-outlined text-primary text-lg">check_circle</span> Consultoria Estratégica Quinzenal</li>
+</ul>
+<a class="w-full py-4 border border-primary text-primary font-bold text-center hover:bg-primary hover:text-on-primary-fixed transition-all" href="https://wa.me/5500000000000">QUERO ESSE PLANO →</a>
+</div>
+</div>
+</section>
+<!-- 8. Por Que Escolher -->
+<section class="py-section-padding px-4 md:px-margin-desktop bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
+<div class="reveal-on-scroll">
+<span class="section-marker"></span>
+<h2 class="font-headline-lg text-3xl md:text-headline-lg uppercase mb-10">Por que escolher <br/> o Grafo Studio?</h2>
+<div class="grid grid-cols-1 gap-6 stagger-container">
+<div class="flex items-start gap-4 stagger-item">
+<span class="material-symbols-outlined text-primary bg-primary-container/20 p-2 rounded">diversity_3</span>
+<div>
+<h4 class="font-bold text-lg">Atendimento Próximo</h4>
+<p class="text-on-surface-variant text-sm">Você fala direto com quem executa. Sem burocracia, sem ruídos.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 stagger-item">
+<span class="material-symbols-outlined text-primary bg-primary-container/20 p-2 rounded">ads_click</span>
+<div>
+<h4 class="font-bold text-lg">Estratégia Personalizada</h4>
+<p class="text-on-surface-variant text-sm">Não usamos fórmulas prontas. Estudamos seu negócio para criar um plano único.</p>
+</div>
+</div>
+<div class="flex items-start gap-4 stagger-item">
+<span class="material-symbols-outlined text-primary bg-primary-container/20 p-2 rounded">speed</span>
+<div>
+<h4 class="font-bold text-lg">Foco em Agilidade</h4>
+<p class="text-on-surface-variant text-sm">Entregas rápidas sem abrir mão da excelência artística e técnica.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="relative reveal-on-scroll" style="transition-delay: 0.4s;">
+<div class="aspect-square bg-surface-container rounded-lg overflow-hidden border border-outline-variant/30 flex items-center justify-center">
+<img alt="Grafo Abstract" class="w-3/4 opacity-20" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyyKdy__soSmWwMz-MqgnEhAPGYEQi3555NV8Z2BBpocR_jg1IESNxwRzCqDY6Taq4vegCGNVw0c_nHbqOIQnYHtkCz3DMYBGIwNzXgaKBXNLrj7Sv0AShEMXVU03pRsmpB8hh5fAWQhYXRB-NzFowLbaNC1ohEYX5MDHDZRfCowYCl9fRIaiL1AAes7tRURIexFp54weGbS1_GtfM3JLir0stW6XWbkherchir_rj2zZ6Se1sHQagalcpu9NA14XdvWJiEsSvc_g"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-primary/10 backdrop-blur-xl p-10 rounded-full border border-primary/20 animate-pulse">
+<span class="material-symbols-outlined text-primary text-8xl" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 9. CTA Final -->
+<section class="py-section-padding px-4 md:px-margin-desktop bg-surface-container-high relative overflow-hidden reveal-on-scroll">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent pointer-events-none"></div>
+<div class="relative z-10 text-center max-w-4xl mx-auto">
+<h2 class="font-display-xl text-4xl md:text-6xl uppercase mb-8">O próximo passo é seu.</h2>
+<p class="font-body-lg text-on-surface-variant mb-12">Estamos prontos para elevar o nível da sua comunicação digital e transformar sua marca em uma referência no mercado.</p>
+<a class="inline-flex items-center gap-4 bg-primary text-on-primary-fixed font-display-xl text-xl md:text-2xl py-6 px-12 rounded-lg hover:scale-105 active:scale-95 transition-all shadow-xl shadow-primary/20" href="https://wa.me/5500000000000">
+            SOLICITAR NO WHATSAPP <span class="material-symbols-outlined text-3xl">chat</span>
+</a>
+</div>
+</section>
+<!-- 10. Instagram Feed -->
+<section class="py-section-padding px-4 md:px-margin-desktop">
+<div class="flex justify-between items-end mb-12 reveal-on-scroll">
+<div>
+<span class="section-marker"></span>
+<h2 class="font-headline-md text-2xl uppercase">| @grafostudio.mkt</h2>
+</div>
+<a class="text-primary hover:underline font-bold" href="#">Ver perfil completo</a>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-6 gap-2 stagger-container">
+<div class="aspect-square bg-surface-container overflow-hidden group stagger-item">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDgt_QTF6XWPOVYcrUB6N1DmCRBnfwiTJ55OTfCJ0P_zlQkvU7N01owkXBQC5ubh4xX6NPZEbFHKjwo8z0uSlf6-1HELWWszAJN_OuFafgYmAJz-j3Hlcy8HC7joeeIj5YrTEcpM7Icf8jRtjDx2y_gYBPePwqlaPw7HQB2KqGvyzgig5oO6LatxRel63TN39tEJklrzo7qtS8FzdyYYv8tLtyv4eDCKBbbtV6hq0ECSoMUDscbsMYh1C1LfpWlLlQ8IeAiMN8XWaE"/>
+</div>
+<div class="aspect-square bg-surface-container overflow-hidden group stagger-item">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPI94ioJHZHB3osIW87LWlG55X4fgzvknN-bO1It4Ocnvad3Njo_E4ClVGn_JjDsO2lj5O_671YZcE3F6sFrh1GAbgWs_e2MhBJPr1fZyHQkQA1BU1kwaVv7MH3ICRGAnXbik_h5OIWQfI9lxZVsgNmdWiysfyDiWQOEoqV6zKMcLKgF6zt8wre9-5-H19iMECt2QNy6zD51wDyBMG8cEkfTlOPBiq_FH5wolMPgLqAVPasgrzhUMZiYG_-_AWsHbUvdvKLgiPuhI"/>
+</div>
+<div class="aspect-square bg-surface-container overflow-hidden group stagger-item">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8adxmcqAd1QiqfnPdS8TFZ5RR1VTXTfMdyi8t72HN0TBI4ncSPISvfSR8MhvkPvfb5VsbqKFzT5R_x8KT1jhiAj1t4FJ_sRrKmC_FFBgrip7ovZdqneCZdmeL4NBQHTZAvXAU2PB6dYj3IaYe353aHvKXw7jGgiu_CiJpIBGaHRFy66AGqTSePmrz65G-4WRfBjVBXuz_XsfCNNav1YY7A3mwC6KQWb70HNUsJeOXUTZUbCgtWTte1HP1cYEQ9WUaRsZm4hnatKc"/>
+</div>
+<div class="aspect-square bg-surface-container overflow-hidden group stagger-item">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFfhToyzikpNFeKpjuNfiYfD2-lmc0kTI4ezpw_3DkdrNZWCIkxYm-yiQL4lPf1ZHzbSI-HZHO4zHhn6wKRgAGawUXAaudORnHbUCE6QvdCcQinpp35ph50xWGM2AWsDwQdFWYBwteVeLzIaJ_YtZEZKtCbaxw_DUecnlVhLudXw_5RHaT8yXKWp3qgxWaWJERBiG6I3uycPGWEGHPj6FiW_dw4kIRnRQtXq6OXzR084R0HqzfDsto9Sqpwsn9ddLMXqgx0z-OhgE"/>
+</div>
+<div class="aspect-square bg-surface-container overflow-hidden group stagger-item">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvhtxvVHm0BBbBFdOoFa-wx7FAvnJi6bvdLs8mXpHYyIP7BttzENQi6iZaodgOGSTLJAmIAi37VYP-v0j3KOEpC0NMnjb9zfm3G_wrLAKayYMtWBYY4tCMkZlaT6uoqcfn0ZNo8gVveDbICAkSgrDJR0EHYLi4Wf0_yskJg5V_lhKipEzsVMESivgV9cCz6B6pd93v-Yw97qwZJTnozYp6X20wjfOv1KTFDRRoeSpNkrTsS6t_SDnOioPl3gfPJNH3cyDCo7ZbmRI"/>
+</div>
+<div class="aspect-square bg-surface-container overflow-hidden group stagger-item">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 cursor-pointer hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAaaUmcK6-uenguGOxUXiixdNbWQ5vDmKY_CnY-GE417f3HhDNHDn3HgpgxH7nCZICeVMSCJM8_85c-vJLh3J0mbWMXfvaBqgWftfEnURS_5l9j1Q0UV-uZjdOLoHOU44d7fvzaXxw29lXcNL5R6kLqDyDLBQRTCrF8FwvH_1lU_a36OFqqMWNXfV0de8gjrrNVZMyKtMb6a8mi3jRoe0Aoa9kIqF7QOC8iVgwbtR3lFy4QnQ2hLVa3ENprpq8S4wWAcUBIgTjaI9c"/>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full py-section-padding bg-surface-container-lowest border-t border-outline-variant/30">
+<div class="grid grid-cols-1 md:grid-cols-12 px-4 md:px-margin-desktop gap-gutter reveal-on-scroll">
+<div class="md:col-span-4">
+<a class="font-headline-md text-headline-md font-bold text-on-surface mb-6 block" href="#">
+<img alt="Grafo Logo Footer" class="h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOu0Rt6EJVa_pXuULg3ST0D-4CUWtJLc3pSnpDhqZij-62IKWuQkpB_odalUK6xkerFZbRjsr1p_IxwG9ocH-R3HlO6JTsU6GZTAPNLjXO-nD33F-8zZv0pMg9xJ6WO9C6EDXO3qWUi9T2Vw39keWwd_KWKhaVm4DSOawP2dsPhbkZx_Pzw6a1JCvAl9XW3bWN_Xsc4OnQJegN3fjYhyDcUXDk1OBpiZwxUDscf0-ccIe2NqwgdnKNNckGEqZSeZchJZjowii4S6k"/>
+</a>
+<p class="font-body-md text-on-surface-variant max-w-xs mb-8">
+                Transformando a presença digital de marcas ambiciosas através de estratégia e design de alto impacto.
+            </p>
+<div class="flex gap-4">
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">public</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">group</span></a>
+<a class="text-on-surface-variant hover:text-primary transition-all" href="#"><span class="material-symbols-outlined">alternate_email</span></a>
+</div>
+</div>
+<div class="md:col-span-2">
+<h4 class="font-bold uppercase tracking-widest text-sm mb-6">Navegação</h4>
+<div class="flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#home">Home</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#sobre">Sobre</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#servicos">Serviços</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#portfolio">Portfólio</a>
+</div>
+</div>
+<div class="md:col-span-2">
+<h4 class="font-bold uppercase tracking-widest text-sm mb-6">Suporte</h4>
+<div class="flex flex-col gap-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#contato">Contato</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Políticas de Privacidade</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Termos de Uso</a>
+</div>
+</div>
+<div class="md:col-span-4">
+<h4 class="font-bold uppercase tracking-widest text-sm mb-6">Newsletter</h4>
+<p class="text-sm text-on-surface-variant mb-4">Receba insights de marketing diretamente no seu e-mail.</p>
+<form class="flex">
+<input class="bg-surface-container border border-outline-variant p-3 flex-grow focus:outline-none focus:border-primary transition-colors" placeholder="Seu e-mail" type="email"/>
+<button class="bg-primary text-on-primary-fixed p-3 px-6 hover:bg-primary-fixed transition-all">OK</button>
+</form>
+</div>
+<div class="md:col-span-12 mt-12 pt-8 border-t border-outline-variant/10 text-center">
+<p class="font-body-md text-on-surface-variant text-sm">© 2024 Grafo Studio. Todos os direitos reservados.</p>
+</div>
+</div>
+</footer>
+<!-- Floating WhatsApp -->
+<a class="fixed bottom-8 right-8 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 active:scale-95 transition-all flex items-center justify-center animate-bounce duration-[2000ms]" href="https://wa.me/5500000000000">
+<svg class="w-8 h-8 fill-current" viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.7 17.8 69.4 27.2 106.2 27.2 122.4 0 222-99.6 222-222 0-59.3-23-115.1-65-157.1zM223.9 446.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 367.3l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.5-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.4-184.5 184.4zm113.3-155.4c-6.2-3.1-36.7-18.1-42.4-20.1-5.7-2-9.8-3-14 3.1-4.1 6.2-15.8 20.1-19.3 24.2-3.6 4.1-7.2 4.6-13.4 1.5-6.2-3.1-26.2-9.6-50-30.8-18.5-16.5-30.9-36.9-34.6-43.1-3.6-6.2-.4-9.6 2.7-12.7 2.8-2.8 6.2-7.2 9.3-10.8 3.1-3.6 4.1-6.2 6.2-10.3 2.1-4.1 1-7.7-.5-10.8-1.5-3.1-14-33.7-19.1-46.1-5.1-12.4-10.2-10.7-14-10.9-3.6-.2-7.7-.2-11.8-.2-4.1 0-10.8 1.5-16.5 7.7-5.7 6.2-21.6 21.1-21.6 51.5 0 30.4 22.1 59.8 25.2 64 3.1 4.1 43.5 66.4 105.4 93.1 14.7 6.3 26.2 10.1 35.1 12.9 14.8 4.7 28.2 4.1 38.9 2.5 11.9-1.8 36.7-15 41.8-29.4 5.2-14.4 5.2-26.8 3.6-29.4-1.5-2.6-5.7-4.1-11.9-7.2z"></path></svg>
+</a>
+<script>
+    // 1. Hero Reveal: Split-text effect (handled via CSS reveal-text class and inline delay)
+
+    // 2. Scroll Reveal & 4. Card Stagger Logic
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                
+                // If it's a stagger container, animate children with delay
+                if (entry.target.classList.contains('stagger-container')) {
+                    const items = entry.target.querySelectorAll('.stagger-item');
+                    items.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'translateY(0)';
+                        }, index * 150);
+                    });
+                }
+            }
+        });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal-on-scroll, .stagger-container').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    // 3. Counters: Animate numbers
+    function animateCounter(element) {
+        const target = parseInt(element.getAttribute('data-target'));
+        const duration = 2000;
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const currentCount = Math.floor(progress * target);
+            element.innerText = currentCount + (element.innerText.includes('%') ? '%' : '');
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                element.innerText = target + (element.innerText.includes('%') ? '%' : '');
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counters = entry.target.querySelectorAll('[data-target]');
+                counters.forEach(c => animateCounter(c));
+                counterObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const numbersSection = document.querySelector('section.bg-primary-container');
+    if (numbersSection) counterObserver.observe(numbersSection);
+
+    // Navigation state highlight
+    window.addEventListener('scroll', () => {
+        const sections = document.querySelectorAll('header, section');
+        const navLinks = document.querySelectorAll('nav div div a');
+        
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+            link.classList.add('text-on-surface-variant');
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.remove('text-on-surface-variant');
+                link.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary', 'pb-1');
+            }
+        });
+    });
+</script>
+</body></html>

@@ -28,6 +28,8 @@ export function generateStaticParams() {
   return SERVICOS.map((s) => ({ slug: s.id }));
 }
 
+const BASE_URL = "https://grafostudio.com.br";
+
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { slug } = await params;
   const servico = SERVICOS.find((s) => s.id === slug);
@@ -46,8 +48,22 @@ export default async function ServicoDetalhePage({ params }: Params) {
   const Icon = ICON_MAP[servico.icone] || Palette;
   const outrosServicos = SERVICOS.filter((s) => s.id !== servico.id);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: BASE_URL },
+      { "@type": "ListItem", position: 2, name: "Serviços", item: `${BASE_URL}/servicos` },
+      { "@type": "ListItem", position: 3, name: servico.titulo, item: `${BASE_URL}/servicos/${servico.id}` },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       {/* Hero */}
       <section className="relative pt-32 pb-20 px-4 bg-[#191919] overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-1 bg-[#ff4e00]" />
@@ -56,13 +72,23 @@ export default async function ServicoDetalhePage({ params }: Params) {
         </div>
         <div className="max-w-4xl mx-auto relative z-10">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-white/40 mb-8">
-            <Link href="/servicos" className="hover:text-white/80 inline-flex items-center gap-1 transition-colors">
-              <ArrowLeft className="w-3 h-3" /> Serviços
-            </Link>
-            <span>/</span>
-            <span className="text-white/60">{servico.titulo}</span>
-          </div>
+          <nav aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2 text-sm text-white/40 mb-8">
+              <li>
+                <Link href="/" className="hover:text-white/80 transition-colors">Home</Link>
+              </li>
+              <li aria-hidden="true"><span>/</span></li>
+              <li>
+                <Link href="/servicos" className="hover:text-white/80 inline-flex items-center gap-1 transition-colors">
+                  <ArrowLeft className="w-3 h-3" /> Serviços
+                </Link>
+              </li>
+              <li aria-hidden="true"><span>/</span></li>
+              <li>
+                <span className="text-white/60" aria-current="page">{servico.titulo}</span>
+              </li>
+            </ol>
+          </nav>
 
           <div className="flex items-center gap-4 mb-6">
             <div className="w-14 h-14 rounded-2xl bg-[#ff4e00]/15 flex items-center justify-center">

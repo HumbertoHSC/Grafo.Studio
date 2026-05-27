@@ -222,7 +222,7 @@ export const SEGMENTOS = [
 export const PACOTES = [
   {
     nome: "Presença Local",
-    preco: "1.990",
+    preco: "1.400",
     periodo: "mês",
     descricao: "Ideal para quem quer começar a crescer no digital",
     itens: [
@@ -234,7 +234,7 @@ export const PACOTES = [
   },
   {
     nome: "Crescimento Regional",
-    preco: "2.790",
+    preco: "2.200",
     periodo: "mês",
     descricao: "O mais escolhido por nossos clientes",
     itens: [
@@ -247,7 +247,7 @@ export const PACOTES = [
   },
   {
     nome: "Domínio Digital",
-    preco: "3.990",
+    preco: "3.500",
     periodo: "mês",
     descricao: "Operação completa para dominar o mercado",
     itens: [
@@ -318,3 +318,28 @@ export const NUMEROS = [
     contexto: "do branding às vendas",
   },
 ];
+
+export const NAV_LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/sobre", label: "Sobre" },
+  { href: "/servicos", label: "Serviços" },
+  { href: "/portfolio", label: "Portfólio" },
+  { href: "/contato", label: "Contato" },
+];
+
+export const SERVICE_ICONS: Record<string, string> = {
+  Palette: "auto_awesome",
+  TrendingUp: "ads_click",
+  Camera: "brush",
+  Code2: "code",
+  BarChart3: "query_stats",
+};
+
+export const SEGMENT_ICONS: Record<string, string> = {
+  Utensils: "restaurant",
+  Stethoscope: "stethoscope",
+  Scale: "balance",
+  Sparkles: "auto_awesome",
+  ShoppingBag: "shopping_bag",
+  Wrench: "build",
+};

@@ -1,214 +1,218 @@
-import { CheckCircle2, Target, Eye, Heart, Zap, Crosshair, Gem } from "lucide-react";
-import Link from "next/link";
 import { WHATSAPP_URL, METODO } from "@/lib/constants";
 import { GrafoPictogram } from "@/components/brand/GrafoPictogram";
-import type { Metadata } from "next";
+import { FadeIn, FadeInStagger, FadeInItem } from "@/components/ui/FadeIn";
+import { buildMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = buildMetadata({
   title: "Sobre | Grafo Studio",
   description:
     "Conheça a Grafo Studio: nossa missão, visão, valores e o Método GRAFO 360° que transforma empresas em marcas lembradas.",
-};
+  path: "/sobre",
+});
 
 export default function SobrePage() {
   return (
-    <>
+    <main className="relative overflow-x-hidden">
+      {/* G watermark no hero */}
+      <div className="absolute right-[-8%] top-16 w-[45%] md:w-[30%] opacity-[0.05] pointer-events-none select-none rotate-12 z-0">
+        <GrafoPictogram color="#ffffff" className="w-full" />
+      </div>
+
       {/* Hero */}
-      <section className="relative pt-32 pb-24 px-4 bg-[#191919] overflow-hidden">
-        <div className="absolute top-0 left-0 right-0 h-1 bg-[#ff4e00]" />
-        <div className="absolute -right-20 top-1/2 -translate-y-1/2 w-[480px] opacity-[0.03] pointer-events-none select-none">
-          <GrafoPictogram color="#ffffff" />
-        </div>
-        <div className="max-w-4xl mx-auto relative z-10">
-          <p className="text-[#ff4e00] text-sm font-semibold uppercase tracking-widest mb-4">
-            Quem somos
-          </p>
-          <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-6">
-            do traço <span className="text-[#ff4e00]">à marca.</span>
+      <section className="min-h-[80vh] flex flex-col justify-center px-5 md:px-20 py-40 relative z-10">
+        <FadeIn className="max-w-4xl">
+          <span className="section-marker" />
+          <h1 className="font-institutional text-5xl md:text-[5rem] font-black mb-8 leading-tight text-[#e2e2e2]">
+            Quem é a <span className="text-[#ff4e00]">Grafo?</span>
           </h1>
-          <p className="text-white/60 text-xl leading-relaxed max-w-2xl">
-            Somos uma agência de marketing criada para transformar empresas comuns em
-            marcas lembradas — com estratégia, criatividade e tecnologia.
+          <p className="font-body text-lg text-[#e6beb2] max-w-2xl leading-relaxed">
+            Somos um estúdio de design e estratégia focado em transformar empresas visionárias
+            em marcas memoráveis através de narrativas visuais potentes.
           </p>
-        </div>
+        </FadeIn>
       </section>
 
       {/* Nossa História */}
-      <section className="py-24 px-4 bg-[#0f0f0f]">
-        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-          <div>
-            <div className="flex items-center gap-3 mb-6">
-              <span className="block w-1 h-8 bg-[#ff4e00] rounded-full" />
-              <h2 className="text-2xl md:text-3xl font-bold">Nossa História</h2>
+      <section className="px-5 md:px-20 py-32 bg-[#0c0f0f] relative overflow-hidden">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+          <FadeIn className="md:col-span-6 z-10">
+            <span className="section-marker" />
+            <h2 className="font-institutional text-3xl md:text-5xl font-bold mb-8 text-[#e2e2e2]">
+              Nossa História
+            </h2>
+            <div className="space-y-6 font-body text-[#e6beb2]">
+              <p>
+                Fundada em 2026, a Grafo Studio nasceu da convicção de que o design não é apenas
+                estética, mas uma ferramenta vital de negócios. Surgimos no epicentro de uma
+                revolução tecnológica, onde a necessidade de conexão humana tornou-se o ativo
+                mais valioso.
+              </p>
+              <p>
+                Nossa jornada é pautada pela intersecção entre arte, estratégia e tecnologia.
+                Não criamos apenas logos; construímos ecossistemas visuais que respiram a
+                essência de nossos parceiros.
+              </p>
+              <p>
+                Ao longo destes anos, refinamos o nosso &ldquo;traço&rdquo; a linha que
+                conecta o problema à solução, o conceito à realidade, a marca ao seu público.
+              </p>
             </div>
-            <p className="text-white/70 leading-relaxed mb-4">
-              A Grafo Studio nasceu em 2026 com uma missão clara: ir além do básico.
-              Enquanto o mercado entregava posts e anúncios, nós queríamos entregar{" "}
-              <span className="text-white font-semibold">crescimento real e previsível.</span>
-            </p>
-            <p className="text-white/60 leading-relaxed mb-4">
-              Reunimos especialistas em tráfego pago, design, desenvolvimento e tecnologia
-              em um só lugar — para que o seu negócio tenha tudo que precisa para evoluir
-              no digital, sem precisar de múltiplos fornecedores.
-            </p>
-            <p className="text-white/60 leading-relaxed">
-              Nosso propósito é simples:{" "}
-              <em className="text-white/80">
-                "Não vendemos tarefas. Entregamos crescimento e previsibilidade para o seu
-                negócio."
-              </em>
-            </p>
-          </div>
-          {/* Pictograma oficial sobre barras decorativas */}
-          <div className="flex items-center justify-center">
-            <div className="relative w-72 h-72 flex items-end justify-center gap-3 pb-6">
-              {[40, 65, 100, 80, 55].map((h, i) => (
-                <div
-                  key={i}
-                  className="w-8 rounded-t-lg bg-[#ff4e00] opacity-15 hover:opacity-40 transition-opacity"
-                  style={{ height: `${h}%` }}
-                />
-              ))}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <GrafoPictogram color="#ff4e00" className="w-36" />
-              </div>
-            </div>
-          </div>
+          </FadeIn>
+          <FadeIn delay={0.2} direction="left" className="md:col-span-6 flex items-center justify-center">
+            <GrafoPictogram
+              color="#ff4e00"
+              className="w-2/3 opacity-15 grayscale hover:grayscale-0 hover:opacity-25 transition-all duration-700"
+            />
+          </FadeIn>
         </div>
       </section>
 
-      {/* Missão, Visão e Valores */}
-      <section className="py-24 px-4 bg-[#191919]">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
-            <span className="block w-1 h-8 bg-[#ff4e00] rounded-full" />
-            <h2 className="text-2xl md:text-3xl font-bold">Missão, Visão e Valores</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icone: Target,
-                titulo: "Missão",
-                texto:
-                  "Conectar pontos, ideias e pessoas através de soluções criativas e inovadoras, traçando o caminho visual ideal para comunicar a essência de cada projeto.",
-              },
-              {
-                icone: Eye,
-                titulo: "Visão",
-                texto:
-                  "Construir uma rede sólida de projetos inspiradores, tornando-nos sinônimo de excelência na interseção entre arte, estratégia e comunicação visual até 2028.",
-              },
-              {
-                icone: Heart,
-                titulo: "Valores",
-                texto: "Confiança, Profissionalismo e Comprometimento. Esses são os pilares que guiam cada projeto, cada decisão e cada entrega da Grafo Studio.",
-              },
-            ].map((item) => (
-              <div
-                key={item.titulo}
-                className="p-8 rounded-2xl border border-white/10 bg-white/[0.02] hover:border-[#ff4e00]/30 transition-colors"
-              >
-                <item.icone className="w-8 h-8 text-[#ff4e00] mb-4" />
-                <h3 className="text-lg font-bold text-white mb-3">{item.titulo}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{item.texto}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+      {/* Missão, Visão, Valores */}
+      <section className="px-5 md:px-20 py-32">
+        <FadeInStagger className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+          {[
+            {
+              icon: "my_location",
+              titulo: "Missão",
+              texto:
+                "Conectar pontos, ideias e pessoas através de soluções criativas que geram impacto real e duradouro no mercado.",
+            },
+            {
+              icon: "visibility",
+              titulo: "Visão",
+              texto:
+                "Tornar-se sinônimo de excelência na interseção entre arte, estratégia e comunicação visual até 2028.",
+            },
+            {
+              icon: "verified",
+              titulo: "Valores",
+              lista: ["Confiança", "Profissionalismo", "Comprometimento"],
+            },
+          ].map((item) => (
+            <FadeInItem key={item.titulo}>
+            <div
+              className="bg-[#1e2020] p-10 border-b-2 border-[#ff4e00] hover:border-b-4 hover:-translate-y-1 transition-all"
+            >
+              <span aria-hidden="true" className="material-symbols-outlined text-[#ff4e00] text-4xl mb-6 block">
+                {item.icon}
+              </span>
+              <h3 className="font-institutional text-2xl font-bold mb-4 text-[#e2e2e2]">{item.titulo}</h3>
+              {item.texto && (
+                <p className="font-body text-[#e6beb2]">{item.texto}</p>
+              )}
+              {item.lista && (
+                <ul className="font-body text-[#e6beb2] space-y-2">
+                  {item.lista.map((v) => (
+                    <li key={v} className="flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 bg-[#ff4e00] rounded-full flex-shrink-0" />
+                      {v}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            </FadeInItem>
+          ))}
+        </FadeInStagger>
       </section>
 
-      {/* Personalidade */}
-      <section className="py-24 px-4 bg-[#0f0f0f]">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-12">
-            <span className="block w-1 h-8 bg-[#ff4e00] rounded-full" />
-            <h2 className="text-2xl md:text-3xl font-bold">Nossa Personalidade</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {/* Personalidade — hover revela cor */}
+      <section className="px-5 md:px-20 py-32 bg-[#1a1c1c] border-y border-[#5c4037]/10">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn className="text-center mb-20">
+            <span className="section-marker mx-auto" />
+            <h2 className="font-institutional text-3xl md:text-5xl font-bold uppercase tracking-tighter text-[#e2e2e2]">
+              Nossa Personalidade
+            </h2>
+          </FadeIn>
+          <FadeInStagger className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#5c4037]/30">
             {[
               {
-                icone: Zap,
                 palavra: "Inteligente",
-                descricao: "Foca em soluções limpas, diretas e funcionais. Estratégia antes da execução.",
+                descricao: "Estratégia antes da estética. Pensamos cada pixel com propósito comercial.",
               },
               {
-                icone: Crosshair,
                 palavra: "Precisa",
-                descricao: "Atenção obsessiva aos detalhes — o \"traço\" perfeito em cada entrega.",
+                descricao: "Execução impecável. Onde a arte encontra o rigor técnico do design.",
               },
               {
-                icone: Gem,
                 palavra: "Elegante",
-                descricao: "Estética refinada e design que sobrevive ao tempo. Visual premium, sempre.",
+                descricao: "A sofisticação do minimalismo. Impacto sem ruído visual.",
               },
             ].map((p) => (
-              <div key={p.palavra} className="text-center p-8 rounded-2xl border border-white/10 bg-white/[0.02]">
-                <p.icone className="w-10 h-10 text-[#ff4e00] mx-auto mb-4" />
-                <h3 className="text-2xl font-black text-[#ff4e00] mb-2">{p.palavra}</h3>
-                <p className="text-white/60 text-sm leading-relaxed">{p.descricao}</p>
+              <FadeInItem key={p.palavra}>
+              <div className="py-12 md:px-12 text-center group cursor-default">
+                <h4 className="font-institutional text-5xl md:text-6xl text-[#ff4e00]/70 group-hover:text-[#ff4e00] transition-colors duration-500 mb-4">
+                  {p.palavra}
+                </h4>
+                <p className="font-body text-[#e6beb2] italic">{p.descricao}</p>
               </div>
+              </FadeInItem>
             ))}
-          </div>
+          </FadeInStagger>
         </div>
       </section>
 
       {/* Método GRAFO 360° */}
-      <section className="py-24 px-4 bg-[#191919]">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="block w-1 h-8 bg-[#ff4e00] rounded-full" />
-            <h2 className="text-2xl md:text-3xl font-bold">Método GRAFO 360°</h2>
-          </div>
-          <p className="text-white/50 mb-12 ml-4">
-            Uma metodologia autoral focada em cinco pilares fundamentais para o sucesso
-            no digital:
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {METODO.map((m, i) => (
-              <div
-                key={m.letra}
-                className="relative flex flex-col p-6 rounded-2xl border border-white/10 bg-white/[0.02] hover:border-[#ff4e00]/40 transition-colors group"
-              >
-                <span className="text-white/10 text-xs font-bold mb-2">0{i + 1}</span>
-                <span className="text-4xl font-black text-[#ff4e00] mb-2">{m.letra}</span>
-                <p className="text-white font-semibold text-sm mb-2">{m.titulo}</p>
-                <p className="text-white/40 text-xs leading-relaxed group-hover:text-white/60 transition-colors">
-                  {m.descricao}
-                </p>
-              </div>
-            ))}
+      <section className="py-32 px-5 md:px-20 bg-[#121414]">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <span className="section-marker" />
+            <h2 className="font-institutional text-3xl md:text-5xl font-bold uppercase mb-16 text-[#e2e2e2]">
+              | Método GRAFO 360°
+            </h2>
+          </FadeIn>
+          <div className="relative">
+            <div className="hidden md:block absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-[#ff4e00]/40 to-transparent" />
+            <FadeInStagger className="grid grid-cols-1 md:grid-cols-5 gap-6 relative z-10">
+              {METODO.map((m) => (
+                <FadeInItem key={m.letra} className="h-full">
+                <div
+                  className="bg-[#ff4e00] p-8 flex flex-col items-center text-center hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#ff4e00]/20 transition-all h-full"
+                >
+                  <span className="font-institutional text-6xl font-black text-white mb-4">{m.letra}</span>
+                  <h4 className="font-institutional text-xl font-bold text-white mb-2">{m.titulo}</h4>
+                  <p className="font-body text-sm text-white/90 leading-relaxed">{m.descricao}</p>
+                </div>
+                </FadeInItem>
+              ))}
+            </FadeInStagger>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-24 px-4 bg-[#ff4e00]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
+      {/* CTA Final */}
+      <section className="px-5 md:px-20 py-32 relative overflow-hidden bg-[#333535]">
+        <div className="absolute inset-0 z-0 opacity-10">
+          <div
+            className="w-full h-full"
+            style={{
+              background:
+                "radial-gradient(circle at center, #ff4e00 0%, transparent 70%)",
+            }}
+          />
+        </div>
+        <FadeIn className="relative z-10 text-center max-w-4xl mx-auto">
+          <h2 className="font-institutional text-4xl md:text-6xl font-black uppercase mb-8 text-[#e2e2e2]">
             Vamos trabalhar juntos?
           </h2>
-          <p className="text-white/80 text-lg mb-8">
-            Podemos montar o plano ideal para a sua empresa e mostrar como crescer no
-            digital com clareza.
+          <p className="font-body text-lg text-[#e6beb2] mb-12 max-w-xl mx-auto">
+            O próximo capítulo da sua marca começa com uma conversa. Estamos prontos para o
+            desafio.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href={WHATSAPP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-[#ff4e00] font-bold hover:bg-white/90 transition-all hover:scale-105"
-            >
-              Solicitar Orçamento
-            </a>
-            <Link
-              href="/servicos"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full border border-white/40 text-white font-semibold hover:bg-white/10 transition-all"
-            >
-              Ver Serviços
-            </Link>
-          </div>
-        </div>
+          <a
+            href={WHATSAPP_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 bg-[#ff4e00] text-white font-body font-bold px-12 py-5 text-lg uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,78,0,0.4)] transition-all mx-auto group"
+          >
+            Iniciar Projeto
+            <span aria-hidden="true" className="material-symbols-outlined group-hover:translate-x-2 transition-transform">
+              rocket_launch
+            </span>
+          </a>
+        </FadeIn>
       </section>
-    </>
+    </main>
   );
 }

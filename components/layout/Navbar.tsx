@@ -1,32 +1,62 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
-import { WHATSAPP_URL } from "@/lib/constants";
+import { WHATSAPP_URL, NAV_LINKS } from "@/lib/constants";
 import { clsx } from "clsx";
 import { scrollToTop } from "@/lib/scrollToTop";
-import { GrafoPictogram } from "@/components/brand/GrafoPictogram";
+import Image from "next/image";
 
-const links = [
-  { href: "/", label: "Home" },
-  { href: "/sobre", label: "Sobre" },
-  { href: "/servicos", label: "Serviços" },
-  { href: "/portfolio", label: "Portfólio" },
-  { href: "/contato", label: "Contato" },
-];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handler);
     return () => window.removeEventListener("scroll", handler);
   }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") {
+        setOpen(false);
+        menuButtonRef.current?.focus();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const drawer = drawerRef.current;
+      if (!drawer) return;
+      const focusable = drawer.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    drawerRef.current?.querySelector<HTMLElement>("a, button")?.focus();
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [open]);
 
   function handleNavClick(href: string) {
     setOpen(false);
@@ -40,23 +70,26 @@ export default function Navbar() {
       data-testid="navbar"
       className={clsx(
         "fixed top-0 left-0 right-0 z-40 transition-all duration-300",
-        scrolled ? "bg-[#191919]/95 backdrop-blur-md shadow-lg" : "bg-transparent"
+        scrolled ? "bg-[#121414]/95 backdrop-blur-md border-b border-[#5c4037]/20 shadow-lg" : "bg-transparent"
       )}
     >
-      <nav className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+      <nav aria-label="Navegação principal" className="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
 
-        {/* Logo — pictograma SVG fiel ao brand guideline + logotipo */}
-        <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <GrafoPictogram size={28} color="#ff4e00" />
-          <span className="font-institutional text-xl font-black tracking-tight leading-none">
-            <span className="text-white">rafo</span>
-            <span className="text-[#ff4e00] text-[0.6rem] font-semibold align-middle ml-0.5">.studio</span>
-          </span>
+        {/* Logo */}
+        <Link href="/" onClick={() => setOpen(false)} aria-label="Grafo Studio — ir para a página inicial">
+          <Image
+            src="/brand/GRAFO_-_LOGO.png"
+            alt="Grafo Studio"
+            width={120}
+            height={40}
+            className="h-8 w-auto object-contain"
+            priority
+          />
         </Link>
 
         {/* Links desktop */}
         <ul className="hidden md:flex items-center gap-1">
-          {links.map((link) => {
+          {NAV_LINKS.map((link) => {
             const active = pathname === link.href;
             return (
               <li key={link.href}>
@@ -64,7 +97,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => handleNavClick(link.href)}
                   className={clsx(
-                    "relative group px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 block",
+                    "relative group px-4 py-2 rounded-full text-sm font-bold tracking-wide transition-all duration-300 block font-body",
                     active
                       ? "text-[#ff4e00]"
                       : "text-white/60 hover:text-white"
@@ -122,10 +155,13 @@ export default function Navbar() {
 
         {/* Menu mobile */}
         <button
+          ref={menuButtonRef}
           data-testid="mobile-menu-button"
           className="md:hidden text-white p-2"
           onClick={() => setOpen(!open)}
-          aria-label="Menu"
+          aria-label="Menu de navegação"
+          aria-expanded={open}
+          aria-controls="mobile-drawer"
         >
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -133,16 +169,16 @@ export default function Navbar() {
 
       {/* Mobile drawer */}
       {open && (
-        <div data-testid="mobile-drawer" className="md:hidden bg-[#191919] border-t border-white/10 px-4 pb-6">
+        <div ref={drawerRef} id="mobile-drawer" data-testid="mobile-drawer" role="dialog" aria-modal="true" aria-label="Menu de navegação" className="md:hidden bg-[#121414] border-t border-[#5c4037]/20 px-4 pb-6">
           <ul className="flex flex-col gap-1 pt-4">
-            {links.map((link) => {
+            {NAV_LINKS.map((link) => {
               const active = pathname === link.href;
               return (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     className={clsx(
-                      "flex items-center gap-3 py-3 px-3 rounded-xl text-base font-bold tracking-wide transition-all",
+                      "flex items-center gap-3 py-3 px-3 rounded-xl text-base font-bold tracking-wide transition-all font-body",
                       active
                         ? "text-[#ff4e00] bg-[#ff4e00]/10"
                         : "text-white/70 hover:text-white hover:bg-white/5"

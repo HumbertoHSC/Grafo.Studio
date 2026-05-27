@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle } from "lucide-react";
+import Image from "next/image";
 import { WHATSAPP_URL } from "@/lib/constants";
 
 export default function WhatsAppButton() {
@@ -14,7 +14,7 @@ export default function WhatsAppButton() {
       className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full shadow-2xl transition-transform hover:scale-110 active:scale-95"
       style={{ backgroundColor: "#25d366" }}
     >
-      <MessageCircle className="w-7 h-7 text-white fill-white" />
+      <Image src="/brand/WhatsApp_icon.png" alt="WhatsApp" width={32} height={32} />
     </a>
   );
 }

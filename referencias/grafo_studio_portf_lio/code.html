@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Portfólio | Grafo Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.cdnfonts.com/css/zona-pro" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#333535",
+                    "inverse-on-surface": "#2f3131",
+                    "surface-dim": "#121414",
+                    "secondary-fixed-dim": "#c8c6c5",
+                    "on-primary-container": "#521300",
+                    "error": "#ffb4ab",
+                    "secondary-container": "#474746",
+                    "surface": "#121414",
+                    "inverse-primary": "#ad3200",
+                    "surface-container-highest": "#333535",
+                    "on-error": "#690005",
+                    "on-tertiary-container": "#2a2a29",
+                    "on-primary-fixed-variant": "#852400",
+                    "tertiary": "#c8c6c5",
+                    "secondary-fixed": "#e5e2e1",
+                    "surface-container-lowest": "#0c0f0f",
+                    "on-secondary-container": "#b7b4b4",
+                    "surface-container-low": "#1a1c1c",
+                    "secondary": "#c8c6c5",
+                    "primary-fixed": "#ffdbd0",
+                    "outline-variant": "#5c4037",
+                    "on-tertiary": "#313030",
+                    "surface-container-high": "#282a2b",
+                    "on-primary-fixed": "#3a0b00",
+                    "on-secondary-fixed-variant": "#474746",
+                    "surface-container": "#1e2020",
+                    "primary-container": "#ff5719",
+                    "tertiary-container": "#929090",
+                    "on-secondary-fixed": "#1c1b1b",
+                    "on-tertiary-fixed-variant": "#474646",
+                    "on-secondary": "#313030",
+                    "background": "#121414",
+                    "on-background": "#e2e2e2",
+                    "error-container": "#93000a",
+                    "primary": "#ffb59e",
+                    "primary-fixed-dim": "#ffb59e",
+                    "surface-bright": "#37393a",
+                    "outline": "#ac897e",
+                    "on-primary": "#5e1700",
+                    "on-surface": "#e2e2e2",
+                    "tertiary-fixed": "#e5e2e1",
+                    "inverse-surface": "#e2e2e2",
+                    "on-tertiary-fixed": "#1c1b1b",
+                    "surface-tint": "#ffb59e",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#c8c6c5",
+                    "on-surface-variant": "#e6beb2"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "section-padding": "120px",
+                    "margin-desktop": "80px",
+                    "gutter": "24px",
+                    "margin-mobile": "20px",
+                    "grid-columns": "12"
+            },
+            "fontFamily": {
+                    "body-md": ["Zona Pro"],
+                    "label-caps": ["Zona Pro"],
+                    "headline-lg-mobile": ["Syne"],
+                    "headline-lg": ["Syne"],
+                    "display-xl": ["Syne"],
+                    "headline-md": ["Syne"],
+                    "body-lg": ["Zona Pro"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "headline-lg": ["48px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "display-xl": ["80px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                    "headline-md": ["32px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #121414; /* surface-dim */
+            color: #e2e2e2; /* on-surface */
+            overflow-x: hidden;
+            font-family: 'Zona Pro', sans-serif;
+        }
+        .text-orange-primary { color: #ff5719; }
+        .bg-orange-primary { background-color: #ff5719; }
+        .border-orange-primary { border-color: #ff5719; }
+        
+        .g-watermark {
+            position: fixed;
+            top: 10%;
+            right: -10%;
+            width: 60%;
+            opacity: 0.05;
+            z-index: -1;
+            pointer-events: none;
+            transform: rotate(-15deg);
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
+        }
+        
+        .project-card:hover .card-accent {
+            height: 4px;
+        }
+
+        .kinetic-transition {
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .active-filter {
+            color: #ff5719;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="font-body-md antialiased">
+<!-- Background Watermark -->
+<img alt="Grafo Studio Background Element" class="g-watermark" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3KGTx6d-9sYZhIe1izNTa5PKBLaLSJQqF-kwbuJKi1dq4ImfydHrko7qqCVrpDvYkiW63myjYTHrSNV_MLom5OZuZ5UNaa2J18w_gk1xZi-hWHnPdBS9N6DFjIXUA-HRkZ1XPoXlbqWAh4tJSjfaWIMm_TFGVjXUsx07bAmG_nmiiSdjfx3BYGDLQZjjwnRqHYPL9ljfxEB_qIn13CfU-IozGt-su-ZpIYxehYuDN9J4MHGuGn2wdPAPdJ_kkHmF37QZMVdh7D0M"/>
+<!-- Header (Shared TopNavBar) -->
+<header class="w-full h-20 bg-background/80 backdrop-blur-md flex justify-between items-center px-margin-desktop max-w-full mx-auto sticky top-0 z-50">
+<div class="font-headline-md text-headline-md font-bold text-on-background tracking-tighter">Grafo Studio</div>
+<nav class="hidden md:flex items-center space-x-8">
+<a class="text-on-background font-body-md text-body-md hover:text-primary transition-colors hover:scale-105 duration-300" href="#">Home</a>
+<a class="text-on-background font-body-md text-body-md hover:text-primary transition-colors hover:scale-105 duration-300" href="#">Sobre</a>
+<a class="text-on-background font-body-md text-body-md hover:text-primary transition-colors hover:scale-105 duration-300" href="#">Serviços</a>
+<a class="text-primary border-b-2 border-primary pb-1 font-body-md hover:scale-105 duration-300" href="#">Portfólio</a>
+<a class="text-on-background font-body-md text-body-md hover:text-primary transition-colors hover:scale-105 duration-300" href="#">Contato</a>
+</nav>
+<button class="font-label-caps text-label-caps uppercase tracking-widest bg-orange-primary text-white px-6 py-3 rounded-DEFAULT hover:scale-105 transition-transform duration-300">
+            Solicitar Orçamento
+        </button>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="pt-24 pb-16 px-margin-desktop max-w-7xl mx-auto">
+<div class="w-24 h-1 bg-orange-primary mb-6"></div>
+<h1 class="font-display-xl text-display-xl uppercase mb-4 leading-none">Portfólio</h1>
+<h2 class="font-headline-lg text-headline-lg text-on-surface-variant mb-8">Projetos Selecionados</h2>
+<p class="font-body-lg text-body-lg max-w-2xl text-on-surface/80">
+                Transformamos visões ousadas em impacto tangível através de design estratégico e excelência criativa. Explore nossa curadoria de trabalhos recentes.
+            </p>
+</section>
+<!-- Filters -->
+<section class="px-margin-desktop max-w-7xl mx-auto mb-12">
+<div class="flex flex-wrap gap-8 font-label-caps text-label-caps uppercase tracking-widest border-b border-surface-variant pb-4">
+<button class="active-filter hover:text-orange-primary transition-colors">Todos</button>
+<button class="text-on-surface/60 hover:text-orange-primary transition-colors">Branding</button>
+<button class="text-on-surface/60 hover:text-orange-primary transition-colors">Web Design</button>
+<button class="text-on-surface/60 hover:text-orange-primary transition-colors">Strategy</button>
+</div>
+</section>
+<!-- Project Grid -->
+<section class="px-margin-desktop max-w-7xl mx-auto pb-section-padding">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Project 1: Lumina Tech -->
+<div class="md:col-span-8 group project-card">
+<div class="relative overflow-hidden bg-surface-container mb-6 h-[500px]">
+<img class="w-full h-full object-cover project-image kinetic-transition" data-alt="A futuristic minimalist branding concept for a technology firm featuring sleek metallic surfaces and neon orange highlights." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4eq2Uga3Gk1d6HpMBT_Mbm1TBUPlnaF3q8bBuEjaRhXV37s8rQyxr138gnr2scoZVEdSraE4cX2jHackkAmNMttm2uVQjH9YfKjnodGzi4_zR1nhhJxMwEwSFMFTfm8S2SL2odbyuP_iM_4LuE-8iX52s95dQ0O4bWJulh8Vy342GzqD3U5r_fcEvfhPhEPdLE9eoMbRNgOP_21UVOmCY0C4fgBFsxkNygbUpMKFKrXKDNboh96EI8CMVevIuZGLEDcvZqxQ_H5o"/>
+<div class="absolute bottom-0 left-0 w-full h-0.5 bg-orange-primary card-accent kinetic-transition"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-2">Lumina Tech</h3>
+<p class="font-label-caps text-label-caps text-orange-primary uppercase">Branding &amp; UI/UX</p>
+</div>
+<span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
+</div>
+</div>
+<!-- Project 2: Nexus Invest -->
+<div class="md:col-span-4 group project-card">
+<div class="relative overflow-hidden bg-surface-container mb-6 h-[500px]">
+<img class="w-full h-full object-cover project-image kinetic-transition" data-alt="A high-end financial dashboard interface displayed on a premium monitor." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC1geF0vCYuGPzeOOXQwI6I8G-XIk9uJDjgnqkUL_vBdTjesUB7R7GCIzmKWb6UmBLRWfa8Md7wOWjgVqzg-I1gF4k2CXVtqcU8IiCNoBTxZKZaHFzi3cKOi_2k5s-7ezPXALayBtPwRL-yJh89BtAFavMfnZP8M65dBF__7Lre29XufUwu6uBoZej7jU6bVbqd9z6nc3PlyTZgqxz3lPLSYEduMJQAoQF4Aad8nnqEYkrV1TdOQQ_a9czxmP1L0dEKKAsbKo-0Qy8"/>
+<div class="absolute bottom-0 left-0 w-full h-0.5 bg-orange-primary card-accent kinetic-transition"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-2">Nexus Invest</h3>
+<p class="font-label-caps text-label-caps text-orange-primary uppercase">Web Design &amp; Growth</p>
+</div>
+<span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
+</div>
+</div>
+<!-- Project 3: Vibe Drink -->
+<div class="md:col-span-5 group project-card mt-12">
+<div class="relative overflow-hidden bg-surface-container mb-6 h-[600px]">
+<img class="w-full h-full object-cover project-image kinetic-transition" data-alt="A stylized product photography of a premium beverage bottle." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-LUruFYxngVLjvjmXiPX-oFR68X2N--4TS8h7MSLTdq2rwZejKXztmg-2fmfvuKgJSRyRDbazLS3hZbDSudaULLWPc8qJXNBIIn1PhHix1UjdYK8tRoKaagQsLNZb0047mTQDUsoHcylZa7uuqwFGP4Nr_4eqqhkICByCT8vANkimJzlklBAl-aAWO3eatkPQCDS8LIERo69wH4DB31NveV9lVWeLWr0aPjK-IbqZiNwCMJBIYX6AEChobN_atNZg0sp-eEMfUks"/>
+<div class="absolute bottom-0 left-0 w-full h-0.5 bg-orange-primary card-accent kinetic-transition"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-2">Vibe Drink</h3>
+<p class="font-label-caps text-label-caps text-orange-primary uppercase">Visual Identity</p>
+</div>
+<span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
+</div>
+</div>
+<!-- Project 4: Solaris Energy -->
+<div class="md:col-span-7 group project-card mt-12 md:mt-32">
+<div class="relative overflow-hidden bg-surface-container mb-6 h-[600px]">
+<img class="w-full h-full object-cover project-image kinetic-transition" data-alt="A conceptual digital artwork representing renewable solar energy." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRnzcFBN7xGjkLCMeRLfQRX9-AjkRclMpVGO3UrbxuF-lC1AQOadbY8x5gFvM8Lp3TfjVkJjVVgrMIfg5JGYqo5-iGNQtSLs4RfdPNsETXSKMcOzlXhDadHdwxRczWx4TX8jXUWqy9HQFZHqKVNU3EhYanZurVXJVmdSEKsPYkpCwXwzNopKToEjLcWVlQzbHbnYqV0pEEnocYzEVhTTkK2zsq95Zi4A8nCFQoTlNGRCLIe8sA_33EGDiQ6_GpJlo7dBwphyGycQ4"/>
+<div class="absolute bottom-0 left-0 w-full h-0.5 bg-orange-primary card-accent kinetic-transition"></div>
+</div>
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-md text-headline-md mb-2">Solaris Energy</h3>
+<p class="font-label-caps text-label-caps text-orange-primary uppercase">Digital Strategy</p>
+</div>
+<span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform">arrow_right_alt</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="bg-surface py-section-padding px-margin-desktop relative overflow-hidden">
+<!-- Decorative "g" -->
+<div class="absolute -left-20 top-1/2 -translate-y-1/2 opacity-10 select-none">
+<span class="font-display-xl text-[400px] leading-none text-orange-primary">g</span>
+</div>
+<div class="max-w-4xl mx-auto text-center relative z-10">
+<div class="w-20 h-1 bg-orange-primary mx-auto mb-8"></div>
+<h2 class="font-display-xl text-display-xl uppercase mb-8">Seu próximo capítulo começa aqui</h2>
+<p class="font-body-lg text-body-lg text-on-surface/70 mb-12 max-w-xl mx-auto">
+                    Pronto para elevar sua marca a um novo patamar de excelência visual e estratégica? Vamos conversar sobre seu projeto.
+                </p>
+<div class="flex flex-col md:flex-row justify-center gap-6">
+<button class="bg-orange-primary text-white font-label-caps text-label-caps uppercase py-5 px-12 tracking-widest hover:scale-105 transition-transform duration-300">
+                        Iniciar Projeto
+                    </button>
+<button class="border border-on-surface text-on-surface font-label-caps text-label-caps uppercase py-5 px-12 tracking-widest hover:bg-on-surface hover:text-surface transition-all duration-300">
+                        Ver Serviços
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer (Shared Footer) -->
+<footer class="w-full pt-section-padding pb-10 border-t-4 border-primary bg-surface dark:bg-surface">
+<div class="grid grid-cols-12 gap-gutter px-margin-desktop max-w-full mx-auto">
+<div class="col-span-12 md:col-span-4 mb-8 md:mb-0">
+<div class="font-headline-lg text-headline-lg font-bold text-on-surface dark:text-on-surface mb-4">Grafo Studio</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs">Elevando marcas através de design audacioso e estratégia cinética.</p>
+</div>
+<div class="col-span-6 md:col-span-2">
+<h4 class="font-label-caps text-label-caps mb-6 text-primary uppercase">Navegação</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 inline-block" href="#">Home</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 inline-block" href="#">Sobre</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 inline-block" href="#">Serviços</a></li>
+</ul>
+</div>
+<div class="col-span-6 md:col-span-2">
+<h4 class="font-label-caps text-label-caps mb-6 text-primary uppercase">Projetos</h4>
+<ul class="space-y-4">
+<li><a class="font-body-md text-primary font-bold hover:translate-x-1 inline-block" href="#">Portfólio</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 inline-block" href="#">Cases</a></li>
+<li><a class="font-body-md text-body-md text-on-surface-variant hover:text-primary transition-colors hover:translate-x-1 inline-block" href="#">Labs</a></li>
+</ul>
+</div>
+<div class="col-span-12 md:col-span-4 mt-8 md:mt-0">
+<h4 class="font-label-caps text-label-caps mb-6 text-primary uppercase">Contato</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-4">contato@grafostudio.com.br</p>
+<div class="flex gap-4">
+<a class="w-10 h-10 border border-surface-variant flex items-center justify-center hover:border-primary hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">share</span>
+</a>
+<a class="w-10 h-10 border border-surface-variant flex items-center justify-center hover:border-primary hover:text-primary transition-all" href="#">
+<span class="material-symbols-outlined">public</span>
+</a>
+</div>
+</div>
+<div class="col-span-12 mt-16 pt-8 border-t border-surface-variant/30 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-md text-body-md text-on-surface-variant/60">© 2024 Grafo Studio. Todos os direitos reservados.</p>
+<div class="flex gap-8">
+<a class="font-label-caps text-[10px] uppercase tracking-tighter text-on-surface-variant/60 hover:text-primary" href="#">Política de Privacidade</a>
+<a class="font-label-caps text-[10px] uppercase tracking-tighter text-on-surface-variant/60 hover:text-primary" href="#">Termos de Uso</a>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interaction for filter buttons
+        const filters = document.querySelectorAll('button.text-on-surface\\/60, button.active-filter');
+        filters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                filters.forEach(f => {
+                    f.classList.remove('active-filter');
+                    f.classList.add('text-on-surface/60');
+                });
+                filter.classList.add('active-filter');
+                filter.classList.remove('text-on-surface/60');
+                
+                // Add a small bounce effect
+                filter.style.transform = 'scale(0.95)';
+                setTimeout(() => filter.style.transform = 'scale(1)', 100);
+            });
+        });
+
+        // Parallax effect for the background watermark
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const watermark = document.querySelector('.g-watermark');
+            if (watermark) {
+                watermark.style.transform = `rotate(-15deg) translateY(${scrolled * 0.1}px)`;
+            }
+        });
+    </script>
+</body></html>
